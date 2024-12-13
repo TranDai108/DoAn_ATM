@@ -21,36 +21,21 @@ namespace DoAn_ATM
             InitializeComponent();
         }
         public BigInteger d;
-        static string EncryptToHex(string plaintext, BigInteger n, BigInteger e)
-        {
-            List<BigInteger> ciphertext = new List<BigInteger>();
-
-            // Mã hóa từng ký tự và chuyển đổi thành hexa
-            foreach (char character in plaintext)
-            {
-                BigInteger m = (BigInteger)character; // Chuyển ký tự thành số nguyên
-                BigInteger c = BigInteger.ModPow(m, e, n); // Mã hóa
-                ciphertext.Add(c);
-            }
-
-            // Chuyển đổi danh sách các số đã mã hóa thành chuỗi hexa
-            StringBuilder hexBuilder = new StringBuilder();
-            foreach (var num in ciphertext)
-            {
-                hexBuilder.Append(num.ToString("X")); // Chuyển đổi sang hexa
-            }
-
-            return hexBuilder.ToString();
-        }
+        
         private void bt_Encrypt_Click(object sender, EventArgs e)
         {
-            rtb_Output.Text = EncryptToHex(rtb_Input.Text.ToString(), BigInteger.Parse(tb_n.Text), BigInteger.Parse(tb_e.Text));
-            rtb_Output.AppendText("\n" + Encrypt(rtb_Input.Text.ToString(), BigInteger.Parse(tb_n.Text), BigInteger.Parse(tb_e.Text)));
+            rtb_Output.Text = Encrypt(rtb_Input.Text.ToString(), BigInteger.Parse(tb_n.Text), BigInteger.Parse(tb_e.Text));
         }
 
         public static string Decrypt(string encryptedText, BigInteger n, BigInteger d)
         {
-            string[] hexPairs = encryptedText.Split(' ', StringSplitOptions.RemoveEmptyEntries); // Tách các giá trị hex
+            List<string> hexPairs = new List<string>(); 
+            string tmp = encryptedText.Replace(" ", "");
+            int num_bits = RoundNumHexaBit(n);
+            MessageBox.Show(num_bits.ToString());
+            for (int i = 0; i < tmp.Length; i += num_bits) {
+                hexPairs.Add(tmp.Substring(i, num_bits));
+            }
             string result = "";
             foreach (string hexPair in hexPairs)
             {
@@ -82,7 +67,7 @@ namespace DoAn_ATM
                 // Convert character to ASCII, encrypt, and convert to hexadecimal
                 BigInteger charValue = new BigInteger(Encoding.ASCII.GetBytes(c.ToString())[0]);
                 BigInteger encryptedValue = BigInteger.ModPow(charValue, e, n);
-                string hexValue = encryptedValue.ToString("X").PadLeft(numBits / 4, '0'); // Convert to hex and pad
+                string hexValue = encryptedValue.ToString("X").PadLeft(numBits, '0'); // Convert to hex and pad
 
                 // Split into pairs
                 for (int i = 0; i < hexValue.Length; i += 2)
@@ -98,8 +83,10 @@ namespace DoAn_ATM
         static int RoundNumHexaBit(BigInteger n)
         {
             // Determine the number of bits in n and round to nearest multiple of 4 (hexadecimal alignment)
-            int numBits = (int)Math.Ceiling(BigInteger.Log(n, 2));
-            return ((numBits + 3) / 4) * 4;
+            int numBits = (int)Math.Ceiling(Math.Ceiling(BigInteger.Log(n, 2)) / 4);
+            if (numBits % 2 != 0)
+                return numBits + 1;
+            return numBits;
         }
 
         private BigInteger GenerateRandomE(BigInteger phiN)
