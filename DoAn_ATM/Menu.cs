@@ -6,5 +6,17 @@ namespace DoAn_ATM
         {
             InitializeComponent();
         }
+
+        private void bt_PlayFair_Click(object sender, EventArgs e)
+        {
+            PlayFair pf = new PlayFair();
+            pf.Show();
+        }
+
+        private void bt_RSA_Click(object sender, EventArgs e)
+        {
+            RSA rsa = new RSA();
+            rsa.Show();
+        }
     }
 }
