@@ -28,12 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "RSA";
+            bt_RSA_Encrypt = new Button();
+            bt_RSA_Decrypt = new Button();
+            SuspendLayout();
+            // 
+            // bt_RSA_Encrypt
+            // 
+            bt_RSA_Encrypt.Location = new Point(255, 107);
+            bt_RSA_Encrypt.Name = "bt_RSA_Encrypt";
+            bt_RSA_Encrypt.Size = new Size(265, 78);
+            bt_RSA_Encrypt.TabIndex = 0;
+            bt_RSA_Encrypt.Text = "Encrypt";
+            bt_RSA_Encrypt.UseVisualStyleBackColor = true;
+            bt_RSA_Encrypt.Click += bt_RSA_Encrypt_Click;
+            // 
+            // bt_RSA_Decrypt
+            // 
+            bt_RSA_Decrypt.Location = new Point(255, 261);
+            bt_RSA_Decrypt.Name = "bt_RSA_Decrypt";
+            bt_RSA_Decrypt.Size = new Size(265, 78);
+            bt_RSA_Decrypt.TabIndex = 1;
+            bt_RSA_Decrypt.Text = "Decrypt";
+            bt_RSA_Decrypt.UseVisualStyleBackColor = true;
+            bt_RSA_Decrypt.Click += bt_RSA_Decrypt_Click;
+            // 
+            // RSA
+            // 
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(bt_RSA_Decrypt);
+            Controls.Add(bt_RSA_Encrypt);
+            Name = "RSA";
+            Text = "RSA";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button bt_RSA_Encrypt;
+        private Button bt_RSA_Decrypt;
     }
 }
