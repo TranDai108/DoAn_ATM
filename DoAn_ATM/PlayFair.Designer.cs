@@ -111,7 +111,7 @@
             // 
             // tbText
             // 
-            tbText.Location = new Point(197, 164);
+            tbText.Location = new Point(198, 164);
             tbText.Name = "tbText";
             tbText.Size = new Size(336, 39);
             tbText.TabIndex = 3;
