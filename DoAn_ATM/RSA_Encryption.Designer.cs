@@ -43,17 +43,20 @@
             rtb_Output = new RichTextBox();
             label6 = new Label();
             bt_Encrypt = new Button();
-            richTextBox1 = new RichTextBox();
-            richTextBox2 = new RichTextBox();
-            button2 = new Button();
+            rtb_PublicKey = new RichTextBox();
+            rtb_PrivateKey = new RichTextBox();
+            bt_KeyPair_Gen = new Button();
             label7 = new Label();
             label8 = new Label();
+            lb_n = new Label();
+            tb_n = new TextBox();
+            bt_Decrypt = new Button();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(578, 34);
+            label1.Location = new Point(579, 32);
             label1.Name = "label1";
             label1.Size = new Size(155, 25);
             label1.TabIndex = 1;
@@ -141,6 +144,7 @@
             bt_GenRan.TabIndex = 11;
             bt_GenRan.Text = "Generate Random Value";
             bt_GenRan.UseVisualStyleBackColor = true;
+            bt_GenRan.Click += bt_GenRan_Click;
             // 
             // button1
             // 
@@ -171,66 +175,97 @@
             // 
             // bt_Encrypt
             // 
-            bt_Encrypt.Location = new Point(582, 167);
+            bt_Encrypt.Location = new Point(582, 151);
             bt_Encrypt.Name = "bt_Encrypt";
-            bt_Encrypt.Size = new Size(151, 94);
+            bt_Encrypt.Size = new Size(151, 48);
             bt_Encrypt.TabIndex = 15;
             bt_Encrypt.Text = "Encrypt";
             bt_Encrypt.UseVisualStyleBackColor = true;
+            bt_Encrypt.Click += bt_Encrypt_Click;
             // 
-            // richTextBox1
+            // rtb_PublicKey
             // 
-            richTextBox1.Location = new Point(77, 515);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(294, 96);
-            richTextBox1.TabIndex = 16;
-            richTextBox1.Text = "";
+            rtb_PublicKey.Location = new Point(77, 515);
+            rtb_PublicKey.Name = "rtb_PublicKey";
+            rtb_PublicKey.Size = new Size(294, 96);
+            rtb_PublicKey.TabIndex = 16;
+            rtb_PublicKey.Text = "";
             // 
-            // richTextBox2
+            // rtb_PrivateKey
             // 
-            richTextBox2.Location = new Point(460, 513);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(311, 96);
-            richTextBox2.TabIndex = 17;
-            richTextBox2.Text = "";
+            rtb_PrivateKey.Location = new Point(460, 513);
+            rtb_PrivateKey.Name = "rtb_PrivateKey";
+            rtb_PrivateKey.Size = new Size(311, 96);
+            rtb_PrivateKey.TabIndex = 17;
+            rtb_PrivateKey.Text = "";
             // 
-            // button2
+            // bt_KeyPair_Gen
             // 
-            button2.Location = new Point(844, 508);
-            button2.Name = "button2";
-            button2.Size = new Size(112, 98);
-            button2.TabIndex = 18;
-            button2.Text = "Generate Key-Pair";
-            button2.UseVisualStyleBackColor = true;
+            bt_KeyPair_Gen.Location = new Point(844, 508);
+            bt_KeyPair_Gen.Name = "bt_KeyPair_Gen";
+            bt_KeyPair_Gen.Size = new Size(112, 98);
+            bt_KeyPair_Gen.TabIndex = 18;
+            bt_KeyPair_Gen.Text = "Generate Key-Pair";
+            bt_KeyPair_Gen.UseVisualStyleBackColor = true;
+            bt_KeyPair_Gen.Click += bt_KeyPair_Gen_Click;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(175, 479);
+            label7.Location = new Point(165, 479);
             label7.Name = "label7";
-            label7.Size = new Size(92, 25);
+            label7.Size = new Size(130, 25);
             label7.TabIndex = 19;
-            label7.Text = "Public Key";
+            label7.Text = "Public Key (e,n)";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(565, 479);
+            label8.Location = new Point(556, 479);
             label8.Name = "label8";
-            label8.Size = new Size(98, 25);
+            label8.Size = new Size(138, 25);
             label8.TabIndex = 20;
-            label8.Text = "Private Key";
+            label8.Text = "Private Key (d,n)";
+            // 
+            // lb_n
+            // 
+            lb_n.AutoSize = true;
+            lb_n.Location = new Point(1069, 393);
+            lb_n.Name = "lb_n";
+            lb_n.Size = new Size(84, 25);
+            lb_n.TabIndex = 22;
+            lb_n.Text = "n = p * q";
+            // 
+            // tb_n
+            // 
+            tb_n.Location = new Point(1069, 421);
+            tb_n.Name = "tb_n";
+            tb_n.Size = new Size(190, 31);
+            tb_n.TabIndex = 21;
+            // 
+            // bt_Decrypt
+            // 
+            bt_Decrypt.Location = new Point(581, 220);
+            bt_Decrypt.Name = "bt_Decrypt";
+            bt_Decrypt.Size = new Size(151, 48);
+            bt_Decrypt.TabIndex = 23;
+            bt_Decrypt.Text = "Decrypt";
+            bt_Decrypt.UseVisualStyleBackColor = true;
+            bt_Decrypt.Click += bt_Decrypt_Click;
             // 
             // RSA_Encryption
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1306, 690);
+            Controls.Add(bt_Decrypt);
+            Controls.Add(lb_n);
+            Controls.Add(tb_n);
             Controls.Add(label8);
             Controls.Add(label7);
-            Controls.Add(button2);
-            Controls.Add(richTextBox2);
-            Controls.Add(richTextBox1);
+            Controls.Add(bt_KeyPair_Gen);
+            Controls.Add(rtb_PrivateKey);
+            Controls.Add(rtb_PublicKey);
             Controls.Add(bt_Encrypt);
             Controls.Add(label6);
             Controls.Add(rtb_Output);
@@ -269,10 +304,13 @@
         private RichTextBox rtb_Output;
         private Label label6;
         private Button bt_Encrypt;
-        private RichTextBox richTextBox1;
-        private RichTextBox richTextBox2;
-        private Button button2;
+        private RichTextBox rtb_PublicKey;
+        private RichTextBox rtb_PrivateKey;
+        private Button bt_KeyPair_Gen;
         private Label label7;
         private Label label8;
+        private Label lb_n;
+        private TextBox tb_n;
+        private Button bt_Decrypt;
     }
 }
