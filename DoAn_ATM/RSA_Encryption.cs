@@ -32,7 +32,6 @@ namespace DoAn_ATM
             List<string> hexPairs = new List<string>(); 
             string tmp = encryptedText.Replace(" ", "");
             int num_bits = RoundNumHexaBit(n);
-            MessageBox.Show(num_bits.ToString());
             for (int i = 0; i < tmp.Length; i += num_bits) {
                 hexPairs.Add(tmp.Substring(i, num_bits));
             }
@@ -83,10 +82,9 @@ namespace DoAn_ATM
         static int RoundNumHexaBit(BigInteger n)
         {
             // Determine the number of bits in n and round to nearest multiple of 4 (hexadecimal alignment)
-            int numBits = (int)Math.Ceiling(Math.Ceiling(BigInteger.Log(n, 2)) / 4);
-            if (numBits % 2 != 0)
-                return numBits + 1;
-            return numBits;
+            int numBits = (int)Math.Ceiling(BigInteger.Log(n, 2));
+            int res = numBits + 8 - numBits % 8;
+            return res / 4;
         }
 
         private BigInteger GenerateRandomE(BigInteger phiN)
@@ -104,11 +102,6 @@ namespace DoAn_ATM
             return e;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         //Tao khoa Public - Private tu gia tri p,q,e da duoc nhap san
         private void bt_KeyPair_Gen_Click(object sender, EventArgs e)
         {
@@ -122,6 +115,7 @@ namespace DoAn_ATM
             rtb_PublicKey.Text = "e = " + E.ToString() + "\n" + "n = " + n.ToString();
             rtb_PrivateKey.Text = "d = " + d.ToString() + "\n" + "n = " + n.ToString();
         }        
+
         //Tao ngau nhien toan bo gia tri p,q,e va khoa Public - Private
         private void bt_GenRan_Click(object sender, EventArgs e)
         {
@@ -130,7 +124,7 @@ namespace DoAn_ATM
             BigInteger n = p * q;
             BigInteger phiN = (p - 1) * (q - 1);
             BigInteger E = GenerateRandomE(phiN);
-            BigInteger d = ModInverse(E, phiN);
+            d = ModInverse(E, phiN);
             tb_p.Text = p.ToString();
             tb_q.Text = q.ToString();
             tb_e.Text = E.ToString();
