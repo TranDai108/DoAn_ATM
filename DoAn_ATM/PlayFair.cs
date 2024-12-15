@@ -74,10 +74,10 @@ namespace DoAn_ATM {
         }
 
         private string ProcessText(string text, bool encrypt) {
+            if (text == "")
+                return "";
             string result = "";
             int size = is5x5Matrix ? 5 : 6;
-
-            MessageBox.Show(text);
 
             for (int i = 0; i < text.Length - 1; i += 2) {
                 char a = text[i];
