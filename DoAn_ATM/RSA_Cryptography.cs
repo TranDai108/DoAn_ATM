@@ -1,12 +1,16 @@
 ﻿using System.Text;
 using System.Numerics;
+using static System.Net.Mime.MediaTypeNames;
 namespace DoAn_ATM
 {
-    public partial class RSA_Encryption : Form {
-        public RSA_Encryption() {
+    public partial class RSA_Cryptography : Form
+    {
+        public RSA_Cryptography()
+        {
             InitializeComponent();
         }
         public BigInteger d;
+        public BigInteger n;
         private bool isOKP = false;
         private bool isValidP = false;
         private bool isOKQ = false;
@@ -14,21 +18,24 @@ namespace DoAn_ATM
         private bool isOKE = false;
 
         // Calculate chunk size base on n = p * q
-        private int ChunkSize(BigInteger n) {
+        private int ChunkSize(BigInteger n)
+        {
             if (n < 127128)
                 return 1;
 
             int i = 0;
             BigInteger sum = 127;
 
-            do {
+            do
+            {
                 i++;
                 sum += BigInteger.Pow(1000, i);
             } while (sum < n / 127);
             return i;
         }
 
-        private BigInteger ConvertStringToNumber(string input) {
+        private BigInteger ConvertStringToNumber(string input)
+        {
             string asciiStr = "";
             foreach (char c in input)
                 asciiStr += ((int)c).ToString("D3");
@@ -36,12 +43,14 @@ namespace DoAn_ATM
             return res;
         }
 
-        private string ConvertNumberToString(BigInteger input) {
+        private string ConvertNumberToString(BigInteger input)
+        {
             string decodedStr = input.ToString();
             int numPad = decodedStr.Length % 3 == 0 ? 0 : 3 - decodedStr.Length % 3;
             string paddedStr = decodedStr.PadLeft(decodedStr.Length + numPad, '0');
             string res = "";
-            for (int i = 0; i < paddedStr.Length; i += 3) {
+            for (int i = 0; i < paddedStr.Length; i += 3)
+            {
                 string asciiChunk = paddedStr.Substring(i, 3);
                 int asciiValue = int.Parse(asciiChunk);
                 res += (char)asciiValue;
@@ -49,22 +58,26 @@ namespace DoAn_ATM
             return res;
         }
 
-        private void bt_Encrypt_Click(object sender, EventArgs e) {
+        private void bt_Encrypt_Click(object sender, EventArgs e)
+        {
             if (isOKP && isOKQ && isOKE)
-                rtb_Output.Text = Encrypt(rtb_Input.Text.ToString(), BigInteger.Parse(tb_n.Text), BigInteger.Parse(tb_e.Text));
+                rtb_Output.Text = Encrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(tb_e.Text));
         }
 
-        public string Decrypt(string encryptedText, BigInteger n, BigInteger d) {
+        public string Decrypt(string encryptedText, BigInteger n, BigInteger d)
+        {
             if (encryptedText == "")
                 return "";
             List<string> hexBlocks = new List<string>();
             string tmp = encryptedText.Replace(" ", "");
             int num_bits = RoundNumHexaBit(n);
-            for (int i = 0; i < tmp.Length; i += num_bits) {
+            for (int i = 0; i < tmp.Length; i += num_bits)
+            {
                 hexBlocks.Add(tmp.Substring(i, num_bits));
             }
             string result = "";
-            foreach (string hexBlock in hexBlocks) {
+            foreach (string hexBlock in hexBlocks)
+            {
                 // Chuyển từng cặp hex thành số nguyên
                 BigInteger encryptedValue = BigInteger.Parse(hexBlock, System.Globalization.NumberStyles.HexNumber);
 
@@ -78,12 +91,14 @@ namespace DoAn_ATM
             return result;
         }
 
-        private void bt_Decrypt_Click(object sender, EventArgs e) {
+        private void bt_Decrypt_Click(object sender, EventArgs e)
+        {
             if (isOKP && isOKQ && isOKE)
-                rtb_Output.Text = Decrypt(rtb_Input.Text.ToString(), BigInteger.Parse(tb_n.Text), BigInteger.Parse(d.ToString()));
+                rtb_Output.Text = Decrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(d.ToString()));
         }
 
-        private string Encrypt(string text, BigInteger n, BigInteger e) {
+        private string Encrypt(string text, BigInteger n, BigInteger e)
+        {
             if (text == "")
                 return "";
             StringBuilder res = new StringBuilder();
@@ -91,16 +106,19 @@ namespace DoAn_ATM
 
             int chunk_size = ChunkSize(n);
             List<string> splitData = new List<string>();
-            for (int i = 0; i < text.Length; i += chunk_size) {
+            for (int i = 0; i < text.Length; i += chunk_size)
+            {
                 int length = Math.Min(chunk_size, text.Length - i);
                 splitData.Add(text.Substring(i, length));
             }
 
-            foreach (string data in splitData) {
+            foreach (string data in splitData)
+            {
                 BigInteger charValue = ConvertStringToNumber(data);
                 BigInteger encryptedValue = BigInteger.ModPow(charValue, e, n);
                 string hexValue = encryptedValue.ToString("X").PadLeft(numBits, '0');
-                for (int i = 0; i < hexValue.Length; i += 2) {
+                for (int i = 0; i < hexValue.Length; i += 2)
+                {
                     res.Append(hexValue.Substring(i, Math.Min(2, hexValue.Length - i)).ToUpper());
                     res.Append(" ");
                 }
@@ -109,17 +127,20 @@ namespace DoAn_ATM
             return res.ToString().TrimEnd();
         }
 
-        private int RoundNumHexaBit(BigInteger n) {
+        private int RoundNumHexaBit(BigInteger n)
+        {
             // Determine the number of bits in n and round to nearest multiple of 4 (hexadecimal alignment)
             int numBits = (int)Math.Ceiling(BigInteger.Log(n, 2));
             int res = numBits + 8 - numBits % 8;
             return res / 4;
         }
 
-        private BigInteger GenerateRandomE(BigInteger phiN) {
+        private BigInteger GenerateRandomE(BigInteger phiN)
+        {
             Random rnd = new Random();
             BigInteger e;
-            do {
+            do
+            {
                 // Sinh số ngẫu nhiên trong khoảng [2, phiN - 1]
                 byte[] buffer = phiN.ToByteArray();
                 rnd.NextBytes(buffer);
@@ -130,40 +151,44 @@ namespace DoAn_ATM
         }
 
         //Tao khoa Public - Private tu gia tri p,q,e da duoc nhap san
-        private void bt_KeyPair_Gen_Click(object sender, EventArgs e) {
-            if (isOKP && isOKQ && isOKE) {
+        private void bt_KeyPair_Gen_Click(object sender, EventArgs e)
+        {
+            if (isOKP && isOKQ && isOKE)
+            {
                 BigInteger p = BigInteger.Parse(tb_p.Text);
                 BigInteger q = BigInteger.Parse(tb_q.Text);
                 BigInteger E = BigInteger.Parse(tb_e.Text);
-                BigInteger n = p * q;
+                n = p * q;
                 BigInteger phiN = (p - 1) * (q - 1);
                 d = ModInverse(E, phiN);
-                tb_n.Text = n.ToString();
                 rtb_PublicKey.Text = "e = " + E.ToString() + "\n" + "n = " + n.ToString();
                 rtb_PrivateKey.Text = "d = " + d.ToString() + "\n" + "n = " + n.ToString();
             }
         }
 
         //Tao ngau nhien toan bo gia tri p,q,e va khoa Public - Private
-        private void bt_GenRan_Click(object sender, EventArgs e) {
+        private void bt_GenRan_Click(object sender, EventArgs e)
+        {
             BigInteger p = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
             BigInteger q = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
-            BigInteger n = p * q;
+            n = p * q;
             BigInteger phiN = (p - 1) * (q - 1);
             BigInteger E = GenerateRandomE(phiN);
             d = ModInverse(E, phiN);
             tb_p.Text = p.ToString();
             tb_q.Text = q.ToString();
             tb_e.Text = E.ToString();
-            tb_n.Text = n.ToString();
+
             rtb_PublicKey.Text = "e = " + E.ToString() + "\n" + "n = " + n.ToString();
             rtb_PrivateKey.Text = "d = " + d.ToString() + "\n" + "n = " + n.ToString();
         }
-        private BigInteger GenerateLargePrime(int bitLength) {
+        private BigInteger GenerateLargePrime(int bitLength)
+        {
             Random random = new Random();
             BigInteger primeCandidate;
 
-            do {
+            do
+            {
                 // Sinh số ngẫu nhiên với độ dài bit yêu cầu
                 byte[] bytes = new byte[bitLength / 8];
                 random.NextBytes(bytes);
@@ -174,7 +199,8 @@ namespace DoAn_ATM
             return primeCandidate;
         }
 
-        private bool IsProbablePrime(BigInteger number, int certainty) {
+        private bool IsProbablePrime(BigInteger number, int certainty)
+        {
             if (number < 2)
                 return false;
             if (number != 2 && number % 2 == 0)
@@ -186,13 +212,15 @@ namespace DoAn_ATM
             BigInteger d = number - 1;
             int s = 0;
 
-            while (d % 2 == 0) {
+            while (d % 2 == 0)
+            {
                 d /= 2;
                 s++;
             }
 
             // Thực hiện thử nghiệm Miller-Rabin
-            for (int i = 0; i < certainty; i++) {
+            for (int i = 0; i < certainty; i++)
+            {
                 BigInteger a = RandomBigInt(2, number - 2);
                 BigInteger x = BigInteger.ModPow(a, d, number);
 
@@ -200,9 +228,11 @@ namespace DoAn_ATM
                     continue;
 
                 bool found = false;
-                for (int r = 1; r < s; r++) {
+                for (int r = 1; r < s; r++)
+                {
                     x = BigInteger.ModPow(x, 2, number);
-                    if (x == number - 1) {
+                    if (x == number - 1)
+                    {
                         found = true;
                         break;
                     }
@@ -215,12 +245,14 @@ namespace DoAn_ATM
             return true;
         }
 
-        private BigInteger RandomBigInt(BigInteger minValue, BigInteger maxValue) {
+        private BigInteger RandomBigInt(BigInteger minValue, BigInteger maxValue)
+        {
             Random random = new Random();
             byte[] bytes = maxValue.ToByteArray();
 
             // Đảm bảo rằng giá trị sinh ra nằm trong khoảng minValue đến maxValue
-            while (true) {
+            while (true)
+            {
                 random.NextBytes(bytes);
                 bytes[bytes.Length - 1] &= 0x7F; // Đảm bảo không có dấu âm
 
@@ -230,14 +262,16 @@ namespace DoAn_ATM
             }
         }
 
-        private BigInteger ModInverse(BigInteger a, BigInteger m) {
+        private BigInteger ModInverse(BigInteger a, BigInteger m)
+        {
             BigInteger m0 = m, t, q;
             BigInteger x0 = 0, x1 = 1;
 
             if (m == 1)
                 return 0;
 
-            while (a > 1) {
+            while (a > 1)
+            {
                 q = a / m;
                 t = m;
 
@@ -255,47 +289,64 @@ namespace DoAn_ATM
             return x1;
         }
 
-        private void tb_p_TextChanged(object sender, EventArgs e) {
-            if (tb_p.Text == "") {
+        private void tb_p_TextChanged(object sender, EventArgs e)
+        {
+            if (tb_p.Text == "")
+            {
                 lblAlertP.Text = "ⓘ p is empty!";
                 lblAlertP.Visible = true;
                 isOKP = false;
                 isValidP = false;
-            } else {
+            }
+            else
+            {
                 BigInteger p;
                 bool test = BigInteger.TryParse(tb_p.Text, out p);
-                if (!test) {
+                if (!test)
+                {
                     lblAlertP.Text = "ⓘ p must be a prime number! (p > 11)";
                     lblAlertP.Visible = true;
                     isOKP = false;
                     isValidP = false;
-                } else {
-                    if (!IsProbablePrime(p, 10)) {
+                }
+                else
+                {
+                    if (!IsProbablePrime(p, 10))
+                    {
                         lblAlertP.Text = "ⓘ p must be a prime number! (p > 11)";
                         lblAlertP.Visible = true;
                         isOKP = false;
                         isValidP = false;
-                    } else {
-                        if (p < 11) {
+                    }
+                    else
+                    {
+                        if (p < 11)
+                        {
                             lblAlertP.Text = "ⓘ p must be a \"large\" number! (p > 11)";
                             lblAlertP.Visible = true;
                             isOKP = false;
                             isValidP = false;
-                        } else {
+                        }
+                        else
+                        {
                             lblAlertP.Visible = false;
                             isOKP = true;
                             isValidP = true;
                         }
                     }
-                    if (isValidQ) {
-                        if (tb_p.Text == tb_q.Text) {
+                    if (isValidQ)
+                    {
+                        if (tb_p.Text == tb_q.Text)
+                        {
                             lblAlertP.Text = "ⓘ p must be different from q!";
                             lblAlertQ.Text = "ⓘ q must be different from p!";
                             lblAlertP.Visible = true;
                             lblAlertQ.Visible = true;
                             isOKP = false;
                             isOKQ = false;
-                        } else {
+                        }
+                        else
+                        {
                             lblAlertQ.Visible = false;
                             isOKQ = true;
                         }
@@ -304,47 +355,64 @@ namespace DoAn_ATM
             }
         }
 
-        private void tb_q_TextChanged(object sender, EventArgs e) {
-            if (tb_q.Text == "") {
+        private void tb_q_TextChanged(object sender, EventArgs e)
+        {
+            if (tb_q.Text == "")
+            {
                 lblAlertQ.Text = "ⓘ q is empty!";
                 lblAlertQ.Visible = true;
                 isOKQ = false;
                 isValidQ = false;
-            } else {
+            }
+            else
+            {
                 BigInteger q;
                 bool test = BigInteger.TryParse(tb_q.Text, out q);
-                if (!test) {
+                if (!test)
+                {
                     lblAlertQ.Text = "ⓘ q must be a prime number! (q > 11)";
                     lblAlertQ.Visible = true;
                     isOKQ = false;
                     isValidQ = false;
-                } else {
-                    if (!IsProbablePrime(q, 10)) {
+                }
+                else
+                {
+                    if (!IsProbablePrime(q, 10))
+                    {
                         lblAlertQ.Text = "ⓘ q must be a prime number! (q > 11)";
                         lblAlertQ.Visible = true;
                         isOKQ = false;
                         isValidQ = false;
-                    } else {
-                        if (q < 11) {
+                    }
+                    else
+                    {
+                        if (q < 11)
+                        {
                             lblAlertQ.Text = "ⓘ q must be a \"large\" number! (q > 11)";
                             lblAlertQ.Visible = true;
                             isOKQ = false;
                             isValidQ = false;
-                        } else {
+                        }
+                        else
+                        {
                             lblAlertQ.Visible = false;
                             isOKQ = true;
                             isValidQ = true;
                         }
                     }
-                    if (isValidP) {
-                        if (tb_p.Text == tb_q.Text) {
+                    if (isValidP)
+                    {
+                        if (tb_p.Text == tb_q.Text)
+                        {
                             lblAlertP.Text = "ⓘ p must be different from q!";
                             lblAlertQ.Text = "ⓘ q must be different from p!";
                             lblAlertP.Visible = true;
                             lblAlertQ.Visible = true;
                             isOKP = false;
                             isOKQ = false;
-                        } else {
+                        }
+                        else
+                        {
                             lblAlertP.Visible = false;
                             isOKP = true;
                         }
@@ -353,39 +421,55 @@ namespace DoAn_ATM
             }
         }
 
-        private void tb_e_TextChanged(object sender, EventArgs e) {
-            if (tb_e.Text == "") {
+        private void tb_e_TextChanged(object sender, EventArgs e)
+        {
+            if (tb_e.Text == "")
+            {
                 lblAlertE.Text = "ⓘ e is empty!";
                 lblAlertE.Visible = true;
                 isOKE = false;
-            } else {
+            }
+            else
+            {
                 BigInteger E;
                 bool test = BigInteger.TryParse(tb_e.Text, out E);
-                if (!test) {
+                if (!test)
+                {
                     lblAlertE.Text = "ⓘ e must be a number! (gcd(e, f(n)) = 1, 1 < e < f(n), f(n) = (p-1)*(q-1)";
                     lblAlertE.Visible = true;
                     isOKE = false;
-                } else {
-                    if (tb_p.Text != "" && tb_q.Text != "") {
+                }
+                else
+                {
+                    if (tb_p.Text != "" && tb_q.Text != "")
+                    {
                         BigInteger p, q;
                         bool t1 = BigInteger.TryParse(tb_p.Text, out p);
                         bool t2 = BigInteger.TryParse(tb_q.Text, out q);
-                        if (!t1 || !t2) {
+                        if (!t1 || !t2)
+                        {
                             lblAlertE.Text = "ⓘ p, q is invalid!";
                             lblAlertE.Visible = true;
                             isOKE = false;
-                        } else {
+                        }
+                        else
+                        {
                             BigInteger f = (p - 1) * (q - 1);
-                            if (BigInteger.GreatestCommonDivisor(E, f) == 1 && E > 1 && E < f) {
+                            if (BigInteger.GreatestCommonDivisor(E, f) == 1 && E > 1 && E < f)
+                            {
                                 lblAlertE.Visible = false;
                                 isOKE = true;
-                            } else {
+                            }
+                            else
+                            {
                                 lblAlertE.Text = "ⓘ e is invalid! (gcd(e,f(n))=1, 1<e<f(n), f(n)=(p-1)*(q-1)";
                                 lblAlertE.Visible = true;
                                 isOKE = false;
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         lblAlertE.Text = "ⓘ p, q is empty!";
                         lblAlertE.Visible = true;
                         isOKE = false;
@@ -394,39 +478,90 @@ namespace DoAn_ATM
             }
         }
 
-        private void btnClear_Click(object sender, EventArgs e) {
+        private void lb_clear_Click(object sender, EventArgs e)
+        {
             rtb_Input.Clear();
             rtb_Output.Clear();
             tb_p.Clear();
             tb_q.Clear();
             tb_e.Clear();
-            tb_n.Clear();
             rtb_PrivateKey.Clear();
             rtb_PublicKey.Clear();
         }
 
-        private void btnImport_Click(object sender, EventArgs e) {
+        private void lb_Encrypt_Click(object sender, EventArgs e)
+        {
+            if (isOKP && isOKQ && isOKE)
+                rtb_Output.Text = Encrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(tb_e.Text));
+        }
+
+        private void lb_Ran_Val_Click(object sender, EventArgs e)
+        {
+            BigInteger p = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
+            BigInteger q = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
+            n = p * q;
+            BigInteger phiN = (p - 1) * (q - 1);
+            BigInteger E = GenerateRandomE(phiN);
+            d = ModInverse(E, phiN);
+            tb_p.Text = p.ToString();
+            tb_q.Text = q.ToString();
+            tb_e.Text = E.ToString();
+
+            rtb_PublicKey.Text = "e : " + E.ToString() + "\n" + "n : " + n.ToString();
+            rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
+        }
+
+        private void lb_Gen_Key_Click(object sender, EventArgs e)
+        {
+            if (isOKP && isOKQ && isOKE)
+            {
+                BigInteger p = BigInteger.Parse(tb_p.Text);
+                BigInteger q = BigInteger.Parse(tb_q.Text);
+                BigInteger E = BigInteger.Parse(tb_e.Text);
+                n = p * q;
+                BigInteger phiN = (p - 1) * (q - 1);
+                d = ModInverse(E, phiN);
+                rtb_PublicKey.Text = "e :" + E.ToString() + "\n" + "n : " + n.ToString();
+                rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
+            }
+        }
+
+        private void lb_Decrypt_Click(object sender, EventArgs e)
+        {
+            if (isOKP && isOKQ && isOKE)
+                rtb_Output.Text = Decrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(d.ToString()));
+        }
+
+        private void lb_Import_Click(object sender, EventArgs e)
+        {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Select a text file";
             ofd.Filter = "Text Files (*.txt)|*.txt";
-            if (ofd.ShowDialog() == DialogResult.OK) {
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
                 rtb_Input.Text = File.ReadAllText(ofd.FileName);
             }
         }
 
-        private void btnExport_Click(object sender, EventArgs e) {
-            SaveFileDialog sfd = new SaveFileDialog {
+        private void lb_Export_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
                 Title = "Save File",
                 Filter = "Text Files (*.txt)|*.txt",
                 DefaultExt = "txt",
                 AddExtension = true
             };
 
-            if (sfd.ShowDialog() == DialogResult.OK) {
-                try {
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
                     File.WriteAllText(sfd.FileName, rtb_Output.Text);
                     MessageBox.Show("File saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } catch {
+                }
+                catch
+                {
                     MessageBox.Show("Something is wrong while saving!", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }

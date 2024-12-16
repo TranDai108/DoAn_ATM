@@ -15,7 +15,7 @@ namespace DoAn_ATM
 
         private void bt_RSA_Click(object sender, EventArgs e)
         {
-            RSA_Encryption rsa = new RSA_Encryption();
+            RSA_Cryptography rsa = new RSA_Cryptography();
             rsa.Show();
         }
     }
