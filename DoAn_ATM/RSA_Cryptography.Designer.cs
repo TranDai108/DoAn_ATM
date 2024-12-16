@@ -397,6 +397,7 @@
             Controls.Add(rtb_Input);
             MaximizeBox = false;
             Name = "RSA_Cryptography";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "RSA Cryptography";
             ResumeLayout(false);
             PerformLayout();

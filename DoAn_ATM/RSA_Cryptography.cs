@@ -151,23 +151,7 @@ namespace DoAn_ATM
         }
 
         //Tao khoa Public - Private tu gia tri p,q,e da duoc nhap san
-        private void bt_KeyPair_Gen_Click(object sender, EventArgs e)
-        {
-            if (isOKP && isOKQ && isOKE)
-            {
-                BigInteger p = BigInteger.Parse(tb_p.Text);
-                BigInteger q = BigInteger.Parse(tb_q.Text);
-                BigInteger E = BigInteger.Parse(tb_e.Text);
-                n = p * q;
-                BigInteger phiN = (p - 1) * (q - 1);
-                d = ModInverse(E, phiN);
-                rtb_PublicKey.Text = "e = " + E.ToString() + "\n" + "n = " + n.ToString();
-                rtb_PrivateKey.Text = "d = " + d.ToString() + "\n" + "n = " + n.ToString();
-            }
-        }
-
-        //Tao ngau nhien toan bo gia tri p,q,e va khoa Public - Private
-        private void bt_GenRan_Click(object sender, EventArgs e)
+        private void lb_Ran_Val_Click(object sender, EventArgs e)
         {
             BigInteger p = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
             BigInteger q = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
@@ -179,8 +163,23 @@ namespace DoAn_ATM
             tb_q.Text = q.ToString();
             tb_e.Text = E.ToString();
 
-            rtb_PublicKey.Text = "e = " + E.ToString() + "\n" + "n = " + n.ToString();
-            rtb_PrivateKey.Text = "d = " + d.ToString() + "\n" + "n = " + n.ToString();
+            rtb_PublicKey.Text = "e : " + E.ToString() + "\n" + "n : " + n.ToString();
+            rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
+        }
+
+        private void lb_Gen_Key_Click(object sender, EventArgs e)
+        {
+            if (isOKP && isOKQ && isOKE)
+            {
+                BigInteger p = BigInteger.Parse(tb_p.Text);
+                BigInteger q = BigInteger.Parse(tb_q.Text);
+                BigInteger E = BigInteger.Parse(tb_e.Text);
+                n = p * q;
+                BigInteger phiN = (p - 1) * (q - 1);
+                d = ModInverse(E, phiN);
+                rtb_PublicKey.Text = "e : " + E.ToString() + "\n" + "n : " + n.ToString();
+                rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
+            }
         }
         private BigInteger GenerateLargePrime(int bitLength)
         {
@@ -495,36 +494,7 @@ namespace DoAn_ATM
                 rtb_Output.Text = Encrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(tb_e.Text));
         }
 
-        private void lb_Ran_Val_Click(object sender, EventArgs e)
-        {
-            BigInteger p = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
-            BigInteger q = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
-            n = p * q;
-            BigInteger phiN = (p - 1) * (q - 1);
-            BigInteger E = GenerateRandomE(phiN);
-            d = ModInverse(E, phiN);
-            tb_p.Text = p.ToString();
-            tb_q.Text = q.ToString();
-            tb_e.Text = E.ToString();
-
-            rtb_PublicKey.Text = "e : " + E.ToString() + "\n" + "n : " + n.ToString();
-            rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
-        }
-
-        private void lb_Gen_Key_Click(object sender, EventArgs e)
-        {
-            if (isOKP && isOKQ && isOKE)
-            {
-                BigInteger p = BigInteger.Parse(tb_p.Text);
-                BigInteger q = BigInteger.Parse(tb_q.Text);
-                BigInteger E = BigInteger.Parse(tb_e.Text);
-                n = p * q;
-                BigInteger phiN = (p - 1) * (q - 1);
-                d = ModInverse(E, phiN);
-                rtb_PublicKey.Text = "e :" + E.ToString() + "\n" + "n : " + n.ToString();
-                rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
-            }
-        }
+        
 
         private void lb_Decrypt_Click(object sender, EventArgs e)
         {
