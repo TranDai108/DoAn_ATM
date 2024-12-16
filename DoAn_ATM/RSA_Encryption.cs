@@ -380,7 +380,7 @@ namespace DoAn_ATM
                                 lblAlertE.Visible = false;
                                 isOKE = true;
                             } else {
-                                lblAlertE.Text = "ⓘ e is invalid!";
+                                lblAlertE.Text = "ⓘ e is invalid! (gcd(e,f(n))=1, 1<e<f(n), f(n)=(p-1)*(q-1)";
                                 lblAlertE.Visible = true;
                                 isOKE = false;
                             }
@@ -403,6 +403,33 @@ namespace DoAn_ATM
             tb_n.Clear();
             rtb_PrivateKey.Clear();
             rtb_PublicKey.Clear();
+        }
+
+        private void btnImport_Click(object sender, EventArgs e) {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Select a text file";
+            ofd.Filter = "Text Files (*.txt)|*.txt";
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                rtb_Input.Text = File.ReadAllText(ofd.FileName);
+            }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e) {
+            SaveFileDialog sfd = new SaveFileDialog {
+                Title = "Save File",
+                Filter = "Text Files (*.txt)|*.txt",
+                DefaultExt = "txt",
+                AddExtension = true
+            };
+
+            if (sfd.ShowDialog() == DialogResult.OK) {
+                try {
+                    File.WriteAllText(sfd.FileName, rtb_Output.Text);
+                    MessageBox.Show("File saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } catch {
+                    MessageBox.Show("Something is wrong while saving!", "Fail", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

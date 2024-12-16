@@ -53,6 +53,8 @@
             lblAlertP = new Label();
             lblAlertQ = new Label();
             lblAlertE = new Label();
+            btnExport = new Button();
+            btnImport = new Button();
             SuspendLayout();
             // 
             // label1
@@ -195,7 +197,7 @@
             // 
             // bt_Encrypt
             // 
-            bt_Encrypt.Location = new Point(407, 91);
+            bt_Encrypt.Location = new Point(407, 57);
             bt_Encrypt.Margin = new Padding(2);
             bt_Encrypt.Name = "bt_Encrypt";
             bt_Encrypt.Size = new Size(106, 29);
@@ -276,7 +278,7 @@
             // 
             // bt_Decrypt
             // 
-            bt_Decrypt.Location = new Point(407, 132);
+            bt_Decrypt.Location = new Point(407, 98);
             bt_Decrypt.Margin = new Padding(2);
             bt_Decrypt.Name = "bt_Decrypt";
             bt_Decrypt.Size = new Size(106, 29);
@@ -324,11 +326,35 @@
             lblAlertE.Text = "label1";
             lblAlertE.Visible = false;
             // 
+            // btnExport
+            // 
+            btnExport.Location = new Point(407, 182);
+            btnExport.Margin = new Padding(2);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(106, 29);
+            btnExport.TabIndex = 52;
+            btnExport.Text = "Export";
+            btnExport.UseVisualStyleBackColor = true;
+            btnExport.Click += btnExport_Click;
+            // 
+            // btnImport
+            // 
+            btnImport.Location = new Point(407, 141);
+            btnImport.Margin = new Padding(2);
+            btnImport.Name = "btnImport";
+            btnImport.Size = new Size(106, 29);
+            btnImport.TabIndex = 51;
+            btnImport.Text = "Import";
+            btnImport.UseVisualStyleBackColor = true;
+            btnImport.Click += btnImport_Click;
+            // 
             // RSA_Encryption
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 414);
+            Controls.Add(btnExport);
+            Controls.Add(btnImport);
             Controls.Add(lblAlertE);
             Controls.Add(lblAlertQ);
             Controls.Add(lblAlertP);
@@ -390,5 +416,7 @@
         private Label lblAlertP;
         private Label lblAlertQ;
         private Label lblAlertE;
+        private Button btnExport;
+        private Button btnImport;
     }
 }
