@@ -5,6 +5,8 @@ namespace DoAn_ATM
         public Menu()
         {
             InitializeComponent();
+            bt_PlayFair.FlatAppearance.BorderSize = 0;
+            bt_RSA.FlatAppearance.BorderSize = 0;
         }
 
         private void bt_PlayFair_Click(object sender, EventArgs e)

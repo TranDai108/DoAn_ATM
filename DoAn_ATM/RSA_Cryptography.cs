@@ -8,6 +8,34 @@ namespace DoAn_ATM
         public RSA_Cryptography()
         {
             InitializeComponent();
+            bt_Clear.FlatAppearance.BorderSize = 0;
+            bt_Clear.FlatAppearance.MouseDownBackColor = Color.Crimson; // Màu khi nhấn
+            bt_Clear.FlatAppearance.MouseOverBackColor = Color.Transparent; // Màu khi hover
+
+            bt_Decrypt.FlatAppearance.BorderSize = 0;
+            bt_Decrypt.FlatAppearance.MouseDownBackColor = Color.Crimson; // Màu khi nhấn
+            bt_Decrypt.FlatAppearance.MouseOverBackColor = Color.Transparent; // Màu khi hover
+
+            bt_Encrypt.FlatAppearance.BorderSize = 0;
+            bt_Encrypt.FlatAppearance.MouseDownBackColor = Color.Crimson; // Màu khi nhấn
+            bt_Encrypt.FlatAppearance.MouseOverBackColor = Color.Transparent; // Màu khi hover
+
+            bt_Import.FlatAppearance.BorderSize = 0;
+            bt_Import.FlatAppearance.MouseDownBackColor = Color.Crimson; // Màu khi nhấn
+            bt_Import.FlatAppearance.MouseOverBackColor = Color.Transparent; // Màu khi hover
+
+            bt_Export.FlatAppearance.BorderSize = 0;
+            bt_Export.FlatAppearance.MouseDownBackColor = Color.Crimson; // Màu khi nhấn
+            bt_Export.FlatAppearance.MouseOverBackColor = Color.Transparent; // Màu khi hover
+
+            bt_Gen_Key.FlatAppearance.BorderSize = 0;
+            bt_Gen_Key.FlatAppearance.MouseDownBackColor = Color.Crimson; // Màu khi nhấn
+            bt_Gen_Key.FlatAppearance.MouseOverBackColor = Color.Transparent; // Màu khi hover
+
+            bt_Gen_Ran.FlatAppearance.BorderSize = 0;
+            bt_Gen_Ran.FlatAppearance.MouseDownBackColor = Color.Crimson; // Màu khi nhấn
+            bt_Gen_Ran.FlatAppearance.MouseOverBackColor = Color.Transparent; // Màu khi hover
+
         }
         public BigInteger d;
         public BigInteger n;
@@ -63,6 +91,11 @@ namespace DoAn_ATM
             if (isOKP && isOKQ && isOKE)
                 rtb_Output.Text = Encrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(tb_e.Text));
         }
+        private void bt_Decrypt_Click(object sender, EventArgs e)
+        {
+            if (isOKP && isOKQ && isOKE)
+                rtb_Output.Text = Decrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(d.ToString()));
+        }
 
         public string Decrypt(string encryptedText, BigInteger n, BigInteger d)
         {
@@ -91,11 +124,7 @@ namespace DoAn_ATM
             return result;
         }
 
-        private void bt_Decrypt_Click(object sender, EventArgs e)
-        {
-            if (isOKP && isOKQ && isOKE)
-                rtb_Output.Text = Decrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(d.ToString()));
-        }
+
 
         private string Encrypt(string text, BigInteger n, BigInteger e)
         {
@@ -151,36 +180,7 @@ namespace DoAn_ATM
         }
 
         //Tao khoa Public - Private tu gia tri p,q,e da duoc nhap san
-        private void lb_Ran_Val_Click(object sender, EventArgs e)
-        {
-            BigInteger p = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
-            BigInteger q = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
-            n = p * q;
-            BigInteger phiN = (p - 1) * (q - 1);
-            BigInteger E = GenerateRandomE(phiN);
-            d = ModInverse(E, phiN);
-            tb_p.Text = p.ToString();
-            tb_q.Text = q.ToString();
-            tb_e.Text = E.ToString();
 
-            rtb_PublicKey.Text = "e : " + E.ToString() + "\n" + "n : " + n.ToString();
-            rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
-        }
-
-        private void lb_Gen_Key_Click(object sender, EventArgs e)
-        {
-            if (isOKP && isOKQ && isOKE)
-            {
-                BigInteger p = BigInteger.Parse(tb_p.Text);
-                BigInteger q = BigInteger.Parse(tb_q.Text);
-                BigInteger E = BigInteger.Parse(tb_e.Text);
-                n = p * q;
-                BigInteger phiN = (p - 1) * (q - 1);
-                d = ModInverse(E, phiN);
-                rtb_PublicKey.Text = "e : " + E.ToString() + "\n" + "n : " + n.ToString();
-                rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
-            }
-        }
         private BigInteger GenerateLargePrime(int bitLength)
         {
             Random random = new Random();
@@ -477,7 +477,38 @@ namespace DoAn_ATM
             }
         }
 
-        private void lb_clear_Click(object sender, EventArgs e)
+        private void bt_Gen_Ran_Click(object sender, EventArgs e)
+        {
+            BigInteger p = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
+            BigInteger q = GenerateLargePrime(512); // Sinh số nguyên tố 512 bit
+            n = p * q;
+            BigInteger phiN = (p - 1) * (q - 1);
+            BigInteger E = GenerateRandomE(phiN);
+            d = ModInverse(E, phiN);
+            tb_p.Text = p.ToString();
+            tb_q.Text = q.ToString();
+            tb_e.Text = E.ToString();
+
+            rtb_PublicKey.Text = "e : " + E.ToString() + "\n" + "n : " + n.ToString();
+            rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
+        }
+
+        private void bt_Gen_Key_Click(object sender, EventArgs e)
+        {
+            if (isOKP && isOKQ && isOKE)
+            {
+                BigInteger p = BigInteger.Parse(tb_p.Text);
+                BigInteger q = BigInteger.Parse(tb_q.Text);
+                BigInteger E = BigInteger.Parse(tb_e.Text);
+                n = p * q;
+                BigInteger phiN = (p - 1) * (q - 1);
+                d = ModInverse(E, phiN);
+                rtb_PublicKey.Text = "e : " + E.ToString() + "\n" + "n : " + n.ToString();
+                rtb_PrivateKey.Text = "d : " + d.ToString() + "\n" + "n : " + n.ToString();
+            }
+        }
+
+        private void bt_Clear_Click(object sender, EventArgs e)
         {
             rtb_Input.Clear();
             rtb_Output.Clear();
@@ -488,21 +519,7 @@ namespace DoAn_ATM
             rtb_PublicKey.Clear();
         }
 
-        private void lb_Encrypt_Click(object sender, EventArgs e)
-        {
-            if (isOKP && isOKQ && isOKE)
-                rtb_Output.Text = Encrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(tb_e.Text));
-        }
-
-        
-
-        private void lb_Decrypt_Click(object sender, EventArgs e)
-        {
-            if (isOKP && isOKQ && isOKE)
-                rtb_Output.Text = Decrypt(rtb_Input.Text.ToString(), n, BigInteger.Parse(d.ToString()));
-        }
-
-        private void lb_Import_Click(object sender, EventArgs e)
+        private void bt_Import_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Select a text file";
@@ -513,7 +530,7 @@ namespace DoAn_ATM
             }
         }
 
-        private void lb_Export_Click(object sender, EventArgs e)
+        private void bt_Export_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog
             {

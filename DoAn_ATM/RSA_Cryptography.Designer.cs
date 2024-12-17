@@ -46,13 +46,13 @@
             lblAlertP = new Label();
             lblAlertQ = new Label();
             lblAlertE = new Label();
-            lb_Export = new Label();
-            lb_Import = new Label();
-            lb_Ran_Val = new Label();
-            lb_Gen_Key = new Label();
-            lb_clear = new Label();
-            lb_Encrypt = new Label();
-            lb_Decrypt = new Label();
+            bt_Encrypt = new Button();
+            bt_Decrypt = new Button();
+            bt_Gen_Ran = new Button();
+            bt_Gen_Key = new Button();
+            bt_Clear = new Button();
+            bt_Import = new Button();
+            bt_Export = new Button();
             SuspendLayout();
             // 
             // rtb_Input
@@ -273,96 +273,104 @@
             lblAlertE.Text = "label1";
             lblAlertE.Visible = false;
             // 
-            // lb_Export
+            // bt_Encrypt
             // 
-            lb_Export.AutoSize = true;
-            lb_Export.BackColor = Color.Transparent;
-            lb_Export.Font = new Font("Dancing Script", 7.999999F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            lb_Export.ForeColor = Color.Gold;
-            lb_Export.Location = new Point(1052, 385);
-            lb_Export.Name = "lb_Export";
-            lb_Export.Size = new Size(61, 23);
-            lb_Export.TabIndex = 53;
-            lb_Export.Text = "Xuất file";
-            lb_Export.Click += lb_Export_Click;
+            bt_Encrypt.BackColor = Color.Transparent;
+            bt_Encrypt.FlatStyle = FlatStyle.Flat;
+            bt_Encrypt.Font = new Font("Dancing Script", 14F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Encrypt.ForeColor = Color.Gold;
+            bt_Encrypt.Location = new Point(616, 213);
+            bt_Encrypt.Name = "bt_Encrypt";
+            bt_Encrypt.Size = new Size(125, 50);
+            bt_Encrypt.TabIndex = 61;
+            bt_Encrypt.Text = "Mã hóa";
+            bt_Encrypt.UseVisualStyleBackColor = false;
+            bt_Encrypt.Click += bt_Encrypt_Click;
             // 
-            // lb_Import
+            // bt_Decrypt
             // 
-            lb_Import.AutoSize = true;
-            lb_Import.BackColor = Color.Transparent;
-            lb_Import.Font = new Font("Dancing Script", 7.999999F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            lb_Import.ForeColor = Color.Gold;
-            lb_Import.Location = new Point(271, 391);
-            lb_Import.Name = "lb_Import";
-            lb_Import.Size = new Size(62, 23);
-            lb_Import.TabIndex = 54;
-            lb_Import.Text = "Thêm file";
-            lb_Import.Click += lb_Import_Click;
+            bt_Decrypt.BackColor = Color.Transparent;
+            bt_Decrypt.FlatStyle = FlatStyle.Flat;
+            bt_Decrypt.Font = new Font("Dancing Script", 14F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Decrypt.ForeColor = Color.Yellow;
+            bt_Decrypt.Location = new Point(617, 305);
+            bt_Decrypt.Name = "bt_Decrypt";
+            bt_Decrypt.Size = new Size(125, 50);
+            bt_Decrypt.TabIndex = 62;
+            bt_Decrypt.Text = "Giải mã";
+            bt_Decrypt.UseVisualStyleBackColor = false;
+            bt_Decrypt.Click += bt_Decrypt_Click;
             // 
-            // lb_Ran_Val
+            // bt_Gen_Ran
             // 
-            lb_Ran_Val.AutoSize = true;
-            lb_Ran_Val.BackColor = Color.Transparent;
-            lb_Ran_Val.Font = new Font("Dancing Script", 12F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            lb_Ran_Val.ForeColor = Color.Gold;
-            lb_Ran_Val.Location = new Point(1024, 470);
-            lb_Ran_Val.Name = "lb_Ran_Val";
-            lb_Ran_Val.Size = new Size(110, 66);
-            lb_Ran_Val.TabIndex = 55;
-            lb_Ran_Val.Text = "Tạo giá trị \r\nngẫu nhiên";
-            lb_Ran_Val.Click += lb_Ran_Val_Click;
+            bt_Gen_Ran.BackColor = Color.Transparent;
+            bt_Gen_Ran.FlatStyle = FlatStyle.Flat;
+            bt_Gen_Ran.Font = new Font("Dancing Script", 11F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Gen_Ran.ForeColor = Color.Gold;
+            bt_Gen_Ran.Location = new Point(992, 459);
+            bt_Gen_Ran.Name = "bt_Gen_Ran";
+            bt_Gen_Ran.Size = new Size(165, 87);
+            bt_Gen_Ran.TabIndex = 63;
+            bt_Gen_Ran.Text = "Tạo giá trị ngẫu nhiên";
+            bt_Gen_Ran.UseVisualStyleBackColor = false;
+            bt_Gen_Ran.Click += bt_Gen_Ran_Click;
             // 
-            // lb_Gen_Key
+            // bt_Gen_Key
             // 
-            lb_Gen_Key.AutoSize = true;
-            lb_Gen_Key.BackColor = Color.Transparent;
-            lb_Gen_Key.Font = new Font("Dancing Script", 14F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            lb_Gen_Key.ForeColor = Color.Gold;
-            lb_Gen_Key.Location = new Point(1021, 577);
-            lb_Gen_Key.Name = "lb_Gen_Key";
-            lb_Gen_Key.Size = new Size(107, 40);
-            lb_Gen_Key.TabIndex = 56;
-            lb_Gen_Key.Text = "Tạo khóa";
-            lb_Gen_Key.Click += lb_Gen_Key_Click;
+            bt_Gen_Key.BackColor = Color.Transparent;
+            bt_Gen_Key.FlatStyle = FlatStyle.Flat;
+            bt_Gen_Key.Font = new Font("Dancing Script", 11F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Gen_Key.ForeColor = Color.Gold;
+            bt_Gen_Key.Location = new Point(992, 566);
+            bt_Gen_Key.Name = "bt_Gen_Key";
+            bt_Gen_Key.Size = new Size(165, 63);
+            bt_Gen_Key.TabIndex = 64;
+            bt_Gen_Key.Text = "Tạo khóa";
+            bt_Gen_Key.UseVisualStyleBackColor = false;
+            bt_Gen_Key.Click += bt_Gen_Key_Click;
             // 
-            // lb_clear
+            // bt_Clear
             // 
-            lb_clear.AutoSize = true;
-            lb_clear.BackColor = Color.Transparent;
-            lb_clear.Font = new Font("Dancing Script", 14F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            lb_clear.ForeColor = Color.Gold;
-            lb_clear.Location = new Point(1194, 574);
-            lb_clear.Name = "lb_clear";
-            lb_clear.Size = new Size(57, 40);
-            lb_clear.TabIndex = 57;
-            lb_clear.Text = "Xóa";
-            lb_clear.Click += lb_clear_Click;
+            bt_Clear.BackColor = Color.Transparent;
+            bt_Clear.FlatStyle = FlatStyle.Flat;
+            bt_Clear.Font = new Font("Dancing Script", 11F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Clear.ForeColor = Color.Gold;
+            bt_Clear.Location = new Point(1176, 459);
+            bt_Clear.Name = "bt_Clear";
+            bt_Clear.Size = new Size(87, 170);
+            bt_Clear.TabIndex = 65;
+            bt_Clear.Text = "Xóa";
+            bt_Clear.TextAlign = ContentAlignment.BottomCenter;
+            bt_Clear.UseVisualStyleBackColor = false;
+            bt_Clear.Click += bt_Clear_Click;
             // 
-            // lb_Encrypt
+            // bt_Import
             // 
-            lb_Encrypt.AutoSize = true;
-            lb_Encrypt.BackColor = Color.Transparent;
-            lb_Encrypt.Font = new Font("Dancing Script", 14F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            lb_Encrypt.ForeColor = Color.Gold;
-            lb_Encrypt.Location = new Point(633, 218);
-            lb_Encrypt.Name = "lb_Encrypt";
-            lb_Encrypt.Size = new Size(91, 40);
-            lb_Encrypt.TabIndex = 59;
-            lb_Encrypt.Text = "Mã hóa";
-            lb_Encrypt.Click += lb_Encrypt_Click;
+            bt_Import.BackColor = Color.Transparent;
+            bt_Import.FlatStyle = FlatStyle.Flat;
+            bt_Import.Font = new Font("Dancing Script", 7.999999F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Import.ForeColor = Color.Gold;
+            bt_Import.Location = new Point(255, 385);
+            bt_Import.Name = "bt_Import";
+            bt_Import.Size = new Size(96, 35);
+            bt_Import.TabIndex = 66;
+            bt_Import.Text = "Thêm file";
+            bt_Import.UseVisualStyleBackColor = false;
+            bt_Import.Click += bt_Import_Click;
             // 
-            // lb_Decrypt
+            // bt_Export
             // 
-            lb_Decrypt.AutoSize = true;
-            lb_Decrypt.BackColor = Color.Transparent;
-            lb_Decrypt.Font = new Font("Dancing Script", 14F, FontStyle.Regular, GraphicsUnit.Point, 163);
-            lb_Decrypt.ForeColor = Color.Gold;
-            lb_Decrypt.Location = new Point(627, 311);
-            lb_Decrypt.Name = "lb_Decrypt";
-            lb_Decrypt.Size = new Size(96, 40);
-            lb_Decrypt.TabIndex = 60;
-            lb_Decrypt.Text = "Giải mã";
-            lb_Decrypt.Click += lb_Decrypt_Click;
+            bt_Export.BackColor = Color.Transparent;
+            bt_Export.FlatStyle = FlatStyle.Flat;
+            bt_Export.Font = new Font("Dancing Script", 7.999999F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Export.ForeColor = Color.Gold;
+            bt_Export.Location = new Point(1035, 379);
+            bt_Export.Name = "bt_Export";
+            bt_Export.Size = new Size(96, 35);
+            bt_Export.TabIndex = 67;
+            bt_Export.Text = "Xuất file";
+            bt_Export.UseVisualStyleBackColor = false;
+            bt_Export.Click += bt_Export_Click;
             // 
             // RSA_Cryptography
             // 
@@ -371,13 +379,13 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1306, 690);
-            Controls.Add(lb_Decrypt);
-            Controls.Add(lb_Encrypt);
-            Controls.Add(lb_clear);
-            Controls.Add(lb_Gen_Key);
-            Controls.Add(lb_Ran_Val);
-            Controls.Add(lb_Import);
-            Controls.Add(lb_Export);
+            Controls.Add(bt_Export);
+            Controls.Add(bt_Import);
+            Controls.Add(bt_Clear);
+            Controls.Add(bt_Gen_Key);
+            Controls.Add(bt_Gen_Ran);
+            Controls.Add(bt_Decrypt);
+            Controls.Add(bt_Encrypt);
             Controls.Add(lblAlertE);
             Controls.Add(lblAlertQ);
             Controls.Add(lblAlertP);
@@ -421,12 +429,12 @@
         private Label lblAlertP;
         private Label lblAlertQ;
         private Label lblAlertE;
-        private Label lb_Export;
-        private Label lb_Import;
-        private Label lb_Ran_Val;
-        private Label lb_Gen_Key;
-        private Label lb_clear;
-        private Label lb_Encrypt;
-        private Label lb_Decrypt;
+        private Button bt_Encrypt;
+        private Button bt_Decrypt;
+        private Button bt_Gen_Ran;
+        private Button bt_Gen_Key;
+        private Button bt_Clear;
+        private Button bt_Import;
+        private Button bt_Export;
     }
 }
