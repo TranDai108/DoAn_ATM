@@ -71,11 +71,11 @@
             // 
             lb_Input.AutoSize = true;
             lb_Input.BackColor = Color.Transparent;
-            lb_Input.Font = new Font("Playfair Display", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lb_Input.Font = new Font("Playfair Display", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lb_Input.ForeColor = Color.Red;
             lb_Input.Location = new Point(120, 175);
             lb_Input.Name = "lb_Input";
-            lb_Input.Size = new Size(79, 28);
+            lb_Input.Size = new Size(76, 28);
             lb_Input.TabIndex = 3;
             lb_Input.Text = "Dữ liệu";
             // 
@@ -173,11 +173,11 @@
             // 
             lb_res.AutoSize = true;
             lb_res.BackColor = Color.Transparent;
-            lb_res.Font = new Font("Playfair Display", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lb_res.Font = new Font("Playfair Display", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lb_res.ForeColor = Color.Red;
             lb_res.Location = new Point(887, 171);
             lb_res.Name = "lb_res";
-            lb_res.Size = new Size(82, 28);
+            lb_res.Size = new Size(80, 28);
             lb_res.TabIndex = 14;
             lb_res.Text = "Kết quả";
             // 

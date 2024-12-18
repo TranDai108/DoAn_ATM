@@ -37,7 +37,7 @@
             // 
             bt_PlayFair.BackColor = Color.Transparent;
             bt_PlayFair.FlatStyle = FlatStyle.Flat;
-            bt_PlayFair.Font = new Font("Playfair Display", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            bt_PlayFair.Font = new Font("Playfair Display", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             bt_PlayFair.ForeColor = Color.Purple;
             bt_PlayFair.Location = new Point(163, 375);
             bt_PlayFair.Name = "bt_PlayFair";
@@ -51,7 +51,7 @@
             // 
             bt_RSA.BackColor = Color.Transparent;
             bt_RSA.FlatStyle = FlatStyle.Flat;
-            bt_RSA.Font = new Font("Playfair Display", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            bt_RSA.Font = new Font("Playfair Display", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             bt_RSA.ForeColor = Color.Purple;
             bt_RSA.Location = new Point(684, 376);
             bt_RSA.Name = "bt_RSA";
