@@ -305,7 +305,7 @@
             // 
             bt_Gen_Ran.BackColor = Color.Transparent;
             bt_Gen_Ran.FlatStyle = FlatStyle.Flat;
-            bt_Gen_Ran.Font = new Font("Dancing Script", 11F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Gen_Ran.Font = new Font("Dancing Script", 12F, FontStyle.Regular, GraphicsUnit.Point, 163);
             bt_Gen_Ran.ForeColor = Color.Gold;
             bt_Gen_Ran.Location = new Point(992, 459);
             bt_Gen_Ran.Name = "bt_Gen_Ran";
@@ -319,7 +319,7 @@
             // 
             bt_Gen_Key.BackColor = Color.Transparent;
             bt_Gen_Key.FlatStyle = FlatStyle.Flat;
-            bt_Gen_Key.Font = new Font("Dancing Script", 11F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Gen_Key.Font = new Font("Dancing Script", 14F, FontStyle.Regular, GraphicsUnit.Point, 163);
             bt_Gen_Key.ForeColor = Color.Gold;
             bt_Gen_Key.Location = new Point(992, 566);
             bt_Gen_Key.Name = "bt_Gen_Key";
@@ -333,7 +333,7 @@
             // 
             bt_Clear.BackColor = Color.Transparent;
             bt_Clear.FlatStyle = FlatStyle.Flat;
-            bt_Clear.Font = new Font("Dancing Script", 11F, FontStyle.Regular, GraphicsUnit.Point, 163);
+            bt_Clear.Font = new Font("Dancing Script", 17.9999981F, FontStyle.Regular, GraphicsUnit.Point, 163);
             bt_Clear.ForeColor = Color.Gold;
             bt_Clear.Location = new Point(1176, 459);
             bt_Clear.Name = "bt_Clear";
